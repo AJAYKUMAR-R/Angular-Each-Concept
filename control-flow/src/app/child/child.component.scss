@@ -1,0 +1,25 @@
+div.card-header{
+    font-family: 'Times New Roman', Times, serif;
+}
+
+div.card-wrapper{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 2.3rem 2.3rem;
+    width: 250px;
+}
+
+img.card-image{
+    max-width: 250px;
+    max-height: 250px;
+    border: 2px solid gray;
+}
+
+div.card-description{
+    font-size: medium;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+div.isfirst{
+    background-color: darken($color: #852f80, $amount: 0);
+}
+

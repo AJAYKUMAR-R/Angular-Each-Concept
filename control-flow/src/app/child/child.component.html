@@ -1,0 +1,12 @@
+<!-- This is the way applying the style based on the condition  : [class.isfirst] = "first"-->
+
+<div class="card-wrapper" [class.isfirst] = "first">
+    <div class="card-header">
+        <h1>{{card.title}}</h1>
+    </div>
+    <div class="card-body">
+        <img class="card-image" [src]="card.imageUrl" />
+        <p class="card-description">{{card.description}}</p>
+    </div>
+    <button (click)="sendTrip(card)">Choose</button>
+</div>
