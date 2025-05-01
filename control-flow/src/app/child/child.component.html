@@ -8,5 +8,22 @@
         <img class="card-image" [src]="card.imageUrl" />
         <p class="card-description">{{card.description}}</p>
     </div>
+
+    <!-- Here i am using ngTemplate show the content based on the condtion 
+    use full when you want show some content if it no data out there 
+    -->
+    <div class="name"  *ngIf="false ; else noData">
+        <h1>Here is the data</h1>
+    </div>
+
+    Selecting the template form the input
+    <ng-template *ngTemplateOutlet="noImage;context:{description:'No Image found'}">
+
+    </ng-template>
+
     <button (click)="sendTrip(card)">Choose</button>
 </div>
+
+<ng-template #noData>
+    <h1>{{card.description}}</h1>
+</ng-template>

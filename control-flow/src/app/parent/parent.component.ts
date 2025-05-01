@@ -1,5 +1,7 @@
-import { Input,Component } from '@angular/core';
-import {ICards} from '../child/child.component'
+import { Input,Component, ViewChild, AfterViewInit, ElementRef, viewChild, OnInit, ViewChildren, QueryList, AfterContentInit, ContentChild, ContentChildren } from '@angular/core';
+import {ChildComponent, ICards} from '../child/child.component'
+import { TemplateBindingParseResult } from '@angular/compiler';
+import { ContentProjectorComponent } from '../content-projector/content-projector.component';
 
 @Component({
   selector: 'app-parent',
@@ -7,7 +9,9 @@ import {ICards} from '../child/child.component'
   templateUrl: './parent.component.html',
   styleUrl: './parent.component.scss'
 })
-export class ParentComponent {
+export class ParentComponent implements OnInit,AfterViewInit {
+  
+ 
   public cards:ICards[] = [
     {
       Id:1,
@@ -29,7 +33,63 @@ export class ParentComponent {
     }
   ];
 
+  ngOnInit(): void {
+    console.log('ngOninit : staticTrue',this.staticTrueRef)
+    console.log('ngOninit : staticFalse',this.staticFalseRef)
+  }
+
   public testCard : ICards[]  = [];
+
+  //view child componenet declartion
+  @ViewChild(ChildComponent) child! : ChildComponent;
+
+
+  //we can accces the child element as the template reference
+  @ViewChild('cardRef',{read:ElementRef}) childRef! : ElementRef;
+
+  @ViewChild('HeadingRef',{read:ElementRef}) HeadingRef! : ElementRef;
+
+  @ViewChild('staticTrueRef' ,{static:true}) staticTrueRef!:ElementRef;
+
+  @ViewChild('staticFalseRef' ,{static:false}) staticFalseRef!:ElementRef;
+
+
+  //ViewChildren will provide all the matched elements in the first child componets
+  @ViewChildren('cardRef') childListRef! : QueryList<ChildComponent>;
+
+  //first possible access points for child elements on it successfully 
+  ngAfterViewInit(): void {
+    //viewchild will give first mathcing comoponents 
+    console.log('Child card',this.child.card);
+
+    //accessing child as elementRef
+    console.log('ElementRef',this.childRef);
+    //For dom manupulation
+    this.childRef.nativeElement.innerHTML = 'red'
+
+    //Accessing simple html elements for dom manupulation
+    this.HeadingRef.nativeElement.BackgroundColor = 'red'
+
+    //Accessing the child elements based on the static property 
+    //static false will be accessed over here but static static true also accesiible over and ngOnInit
+    console.log('Viewinit : staticTrue',this.staticTrueRef)
+    console.log('Viewinit : staticFalse',this.staticFalseRef)
+
+
+    //this will show the list of of mathing child components
+    console.log('List of child Components',this.childListRef)
+
+    //This will listen for the changes predically
+    //this will provide if any changes in the component happens
+    this.childListRef.changes.subscribe((changes)=>{
+      console.log(changes);
+    });
+
+
+
+  }
+
+  
 
   //Custom event never bubble whereas js event like click will buble up till parent component
   getTrip(card:ICards){
@@ -43,4 +103,7 @@ export class ParentComponent {
     }
     return ''
   }
+
+ 
+  
 }
