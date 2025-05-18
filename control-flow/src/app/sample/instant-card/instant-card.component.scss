@@ -1,0 +1,48 @@
+// which will apply the style to the host element or the component itself
+//View encapsulation by default add the attribute like ng-content-c0 to each element to 
+//apply style on the specific componet itself 
+//:host is keywrod to override the style of the current componet 
+
+:host {
+    display: block;
+    width: 500px;
+    height: 500px;
+}
+
+//There are three different types of encapsulation
+//Emulated : which is there by default will add the unique attribute to the each components
+//None : will remove the unique attribute to each components every thing will behave like normal css
+//ShadowDom : will remove the attribute however the style are applied to the specific page using normal browser ##ID like rendering
+
+//::ng-deep will remove the attribute of angular generated after the css
+//without that it will add the special attribute
+
+//host-context what is it?
+
+//try to style the component which is being passed from the parent using content projection
+.lorem{
+    width: 50x;
+}
+
+
+//can't apply the normal style becuase 
+//because style got applied like this we can provide the attribute 
+//because it will be changing frequently
+
+  .lorem[_ngcontent-ng-c3619117267] {
+    width: 50x;
+  }
+/*# sourceMappingURL=/instant-card.component.css.map */
+
+//To remove the attribute applied like that 
+//we need to provide ng-deep it will remove the auto attributes afterward 
+::ng-deep   .lorem{
+    width: 50px;
+}
+
+//it will remove the specific attribute of componet of darktheme only not lorem
+//becuase when you put ::ng-deep temp data : it will remove the specific componet attributes
+//to all the class like temp data
+:host-context(.darktheme) .lorem{
+  color:violet;
+}

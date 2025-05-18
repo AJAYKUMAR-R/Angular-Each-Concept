@@ -1,0 +1,75 @@
+Angular Directive Guide
+========================
+
+1. What is a Directive?
+------------------------
+A directive in Angular is a class marked with the @Directive decorator.
+It allows you to attach custom behavior to elements in the DOM.
+
+2. Types of Directives
+-----------------------
+There are three main types of directives in Angular:
+- Component: A directive with its own template.
+- Structural: Modifies the DOM structure, e.g., *ngIf, *ngFor.
+- Attribute: Alters appearance or behavior of elements, e.g., ngClass, ngStyle.
+
+3. Built-in Directive Examples
+-------------------------------
+Structural Directives:
+- *ngIf
+- *ngFor
+- *ngSwitch
+
+Attribute Directives:
+- ngClass
+- ngStyle
+- required
+- disabled
+
+4. Creating a Custom Attribute Directive
+-----------------------------------------
+Step 1: Generate the directive:
+ng generate directive highlight
+
+Step 2: Code (highlight.directive.ts):
+
+import { Directive, ElementRef, Renderer2, HostListener } from '@angular/core';
+
+@Directive({ selector: '[appHighlight]' })
+export class HighlightDirective {
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
+
+  @HostListener('mouseenter') onMouseEnter() {
+    this.renderer.setStyle(this.el.nativeElement, 'background-color', 'yellow');
+  }
+
+  @HostListener('mouseleave') onMouseLeave() {
+    this.renderer.removeStyle(this.el.nativeElement, 'background-color');
+  }
+}
+
+Usage:
+<p appHighlight>Hover over me!</p>
+
+5. Creating a Custom Structural Directive
+------------------------------------------
+Example: appIf directive (like *ngIf):
+
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+
+@Directive({ selector: '[appIf]' })
+export class AppIfDirective {
+  constructor(private templateRef: TemplateRef<any>, private viewContainer: ViewContainerRef) {}
+
+  @Input() set appIf(condition: boolean) {
+    if (condition) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    } else {
+      this.viewContainer.clear();
+    }
+  }
+}
+
+Usage:
+<div *appIf="showContent">Conditionally shown</div>
+

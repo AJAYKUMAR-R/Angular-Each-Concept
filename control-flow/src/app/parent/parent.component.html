@@ -81,10 +81,8 @@ however you can control the element to ready at NgOnInit or NgViewInit by provid
     <div #childContent style="padding: 0.5rem 0.5rem;">This is the body </div>
     <!-- Here you can see you can even pass the another component inside the components -->
     <app-child #childContent [card]="cards[1]"  (selectedTrip)="getTrip($event)"></app-child>
-
     <!-- just imagine you have so many components but want render is based on the either these 
     selection like tagname , class name even id -->
-
     <h1 #childContent class="chossed">Just a class sample</h1>
 </app-content-projector>
 
@@ -92,7 +90,6 @@ however you can control the element to ready at NgOnInit or NgViewInit by provid
     <div style="padding: 0.5rem 0.5rem;">This is the body </div>
     <!-- just imagine you have so many components but want render is based on the either these 
     selection like tagname , class name even id -->
-
     <h1 class="chossed">Just a class sample</h1>
 </app-content-projector>
 
@@ -117,3 +114,12 @@ if you don't want the extra tag to rendered you can use the ng-container instead
 <div *ngTemplateOutlet="ShowTemplate; context:{description : 'Hello world'}"></div>
 
 <ng-container *ngTemplateOutlet="ShowTemplate; context:{description : 'Hello world Bro'}"></ng-container>
+
+
+
+<div class="darktheme">
+    <h1>Try to understand the ViewEncapsulation</h1>
+    <app-instant-card >
+        <p class="lorem">Hi Lam Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis distinctio earum vero suscipit vitae maxime repellendus ipsa atque harum, illo asperiores porro itaque modi corrupti! Tempora esse labore accusantium dolores!</p>
+    </app-instant-card>
+</div>

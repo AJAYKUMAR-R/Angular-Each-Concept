@@ -2,12 +2,16 @@ import { Input,Component, ViewChild, AfterViewInit, ElementRef, viewChild, OnIni
 import {ChildComponent, ICards} from '../child/child.component'
 import { TemplateBindingParseResult } from '@angular/compiler';
 import { ContentProjectorComponent } from '../content-projector/content-projector.component';
+import { IntialService } from '../service/intial.service';
 
 @Component({
   selector: 'app-parent',
   standalone: false,
   templateUrl: './parent.component.html',
-  styleUrl: './parent.component.scss'
+  styleUrl: './parent.component.scss',
+  // providers : [
+  //   IntialService
+  // ]
 })
 export class ParentComponent implements OnInit,AfterViewInit {
   
@@ -39,6 +43,13 @@ export class ParentComponent implements OnInit,AfterViewInit {
   }
 
   public testCard : ICards[]  = [];
+
+  /**
+   *
+   */
+  constructor(private intial:IntialService) {
+    console.log("Parent Service " + this.intial.count)
+  }
 
   //view child componenet declartion
   @ViewChild(ChildComponent) child! : ChildComponent;

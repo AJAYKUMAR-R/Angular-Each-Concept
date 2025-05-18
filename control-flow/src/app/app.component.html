@@ -1,3 +1,44 @@
 <app-parent></app-parent>
 
 <button (click)="addData()">Add Record</button>
+
+<hr/>
+
+The concept of directive being implemented over here
+
+
+<div>
+    This is custom attribute directive 
+    <!-- This is how we can send multiple values to decorator as input property -->
+    <app-instant-card [isHighlighter]="true" appHighlighter (data)="getData($event)"></app-instant-card>
+</div>
+
+<!-- we can access the directive in the ts file as well -->
+<div (dblclick)="high.MouseLeaver()">
+    <!-- here we go we are accessing the highlighter directive methods programtically in the 
+    template itself -->
+    <app-instant-card appHighlighter #high="hlight" (data)="getData($event)">
+    </app-instant-card>
+    
+</div>
+
+
+<!-- using the custom structural directive which is equvallent to ngFor -->
+<ng-container *appNgxFor="let x of (nameList | async); let i = index">
+    <h1>{{i}}. Hi! {{x}}</h1>
+</ng-container>
+
+
+<!-- 
+<ng-container *ngFor="let x of (nameList | async); let i = index">
+    <h1>{{i}}. Hi! {{x}}</h1>
+</ng-container> -->
+
+<!-- above code will transform it like this -->
+appNgxForOf : why this is changed of because anuglar rule applied 
+<!-- Why Not Just appNgxFor?:
+If you used @Input() appNgxFor instead of @Input() appNgxForOf, Angular wouldn’t know how to split let item of items correctly.
+The Of suffix is a required convention for structural directives that mimic *ngFor. -->
+<ng-template appNgxFor [appNgxForOf]="nameList" let-name="$implicit" let-i="index">
+   <h1>{{ i }}. {{ name }}</h1> 
+</ng-template>
