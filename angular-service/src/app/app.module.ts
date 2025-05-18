@@ -3,14 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SummaryComponent } from './summary/summary.component';
+import { HttpClientModule } from '@angular/common/http';
+import { TableHighlighterDirective } from './directive/tablehighlighter/table-highlighter.directive';
+import { NotifierComponent } from './notifier/notifier.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SummaryComponent,
+    TableHighlighterDirective,
+    NotifierComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

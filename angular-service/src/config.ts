@@ -1,0 +1,1 @@
+export const CONFIG = { apiUrl: 'https://api.example.com', retry: 3 };
