@@ -1,0 +1,125 @@
+<h1>Parent componet</h1>
+
+<!--1. new control flow syntax for-->
+<!-- no wrapper div needed -->
+ <!-- usually if there is any change in the array angular it would not rerender all the element 
+ however if it is @for it would comple the developer to provided tracking funtion 
+ so if there is a new record added to collection it will create new array and compare the difference 
+ only that different element will be re-render not all not all -->
+@for(card of cards  ; track card.Id){
+    <app-child #cardRef [noImage]="Noimage" [card]="card" [first]="$first" (selectedTrip)="getTrip($event)">
+
+        <!-- This is the template we are going to pass it to the child -->
+        <ng-template #Noimage let-Name="description">
+            <h1>{{Name}} : This card has no Image</h1>
+        </ng-template>
+
+    </app-child>
+}
+<!-- If the array is empty it will run the empty block -->
+@empty {
+    <div>No Trip are available now</div>
+}
+
+<!-- 1. we don't have to use ng template less verbose -->
+@if(true){
+    <h1 #HeadingRef>New If true</h1>
+}@else if (true) {
+    <h1>New Else if True</h1>
+}@else{
+    <h1 >New Else true</h1>
+}
+
+<!-- 2.ng-template will be used when ever i want to render so other contents if the ngIf fails -->
+<div *ngIf="true; else elseTemp">
+    <h1>Hai Condition is ture</h1>
+</div>
+
+<ng-template #elseTemp>
+    <h1>Else has been ran</h1>
+</ng-template>
+
+
+<!-- 3.[ngStyle] and [ngClass] both are helps to apply the style on the condition basis -->
+<!-- --we can return an array class for ngClass = ['card-header','card-image'] or object {'card-header':true,'card-bak:false'} based on the value boolean style may get affected -->
+ <!-- ngSyle also either only object-->
+
+<div [ngClass]="['card-header','card-wrapper']">Show me or hide me as an array</div>
+
+<div [ngClass]="{'card-header':false,'card-wrapper':true}">Show me or hide me as an Object</div>
+
+<div [ngClass]="getStyle()">Throgh method</div>
+
+
+<div [ngStyle]="{display:'block',color:'red'}">Hai there</div>
+<!-- <div [ngStyle]="funtion()"></div> function returning the object -->
+
+
+<!-- 
+if there is a case you need a wrapper div to apply the components coditionally however don't want to 
+affect the dom  using ng-contanier it doesn't create wrapper element-->
+
+<ng-container *ngIf="true">
+    <h1>Hello world</h1>
+</ng-container>
+
+
+<!-- understanig the purpose of the Child decorator with NgOnInit with use of static property -->
+<h1 #staticTrueRef> This is accessed inside the NgOnInit since it no longer using Directive like *ngIf or *ngFor</h1>
+
+<!-- Note that if ngIf is having the false condtion it won't be render the html h1 tag over here in that it doesn't you
+are having the true or flase it would fail any way since the element is not rendered yet 
+however you can control the element to ready at NgOnInit or NgViewInit by providing static true or false -->
+
+
+<h1 #staticFalseRef *ngIf="true"> This is can't be accessed inside the NgOnInit since it is using Directive like *ngIf or *ngFor</h1>
+
+
+<!-- Here is the example content projection in angular  -->
+
+<app-content-projector>
+    <div #childContent style="padding: 0.5rem 0.5rem;">This is the body </div>
+    <!-- Here you can see you can even pass the another component inside the components -->
+    <app-child #childContent [card]="cards[1]"  (selectedTrip)="getTrip($event)"></app-child>
+    <!-- just imagine you have so many components but want render is based on the either these 
+    selection like tagname , class name even id -->
+    <h1 #childContent class="chossed">Just a class sample</h1>
+</app-content-projector>
+
+<app-content-projector>
+    <div style="padding: 0.5rem 0.5rem;">This is the body </div>
+    <!-- just imagine you have so many components but want render is based on the either these 
+    selection like tagname , class name even id -->
+    <h1 class="chossed">Just a class sample</h1>
+</app-content-projector>
+
+
+
+<!-- Ng-template explanation -->
+
+<!-- we can create single ng-template with its own private variable 
+by intantiating multiple times -->
+
+<h1 *ngIf="false;else ShowTemplate"></h1>
+
+<!-- let is used for creating private variable -->
+<ng-template #ShowTemplate let-data="description">
+    <h1>{{data}}</h1>
+</ng-template>
+
+<!-- intantiating templates
+description => being evaluated from the context if there is description in the context it would render it
+*ngTemplateOutlet => will create the template instance 
+if you don't want the extra tag to rendered you can use the ng-container instead div -->
+<div *ngTemplateOutlet="ShowTemplate; context:{description : 'Hello world'}"></div>
+
+<ng-container *ngTemplateOutlet="ShowTemplate; context:{description : 'Hello world Bro'}"></ng-container>
+
+
+
+<div class="darktheme">
+    <h1>Try to understand the ViewEncapsulation</h1>
+    <app-instant-card >
+        
+    </app-instant-card>
+</div>
