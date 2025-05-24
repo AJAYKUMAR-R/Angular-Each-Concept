@@ -17,8 +17,10 @@ export class AppComponent implements OnInit{
   title = 'angular-service';
   public serviceData!:any[];
 
+  
+
   constructor(@Self() private sf:JsonServiceService,private cdr:ChangeDetectorRef) {
-   this.serviceData = this.sf.jsonData;
+  this.serviceData = this.sf.jsonData;
   // This data appears in the view not because mutation is detected,
   // but because it was added to the source (array) during component construction.
   // At that time, Angular is performing the initial binding, so it captures the current state.
@@ -26,50 +28,70 @@ export class AppComponent implements OnInit{
   //it wouldn't even render it before that we updated so it will render it the updated data
     this.sf.jsonData.push({
       id: 4,
-      title: 'Build with Directive',
+      title: 'Build with Directive ' + 4 ,
       description: 'Directive are the building blocks of Angular applications.',
       buttonText: 'See Directive Examples'
     })
-  }
-  ngOnInit(): void {
 
-    //I have modified the data after 5 sec so it would no shown in the view
-    //just because on Push
+    //This is here to justify the componet which has strategy on push 
+    //will detect only change through event or changedetect methods 
+    //let say for an example you are adding the data to the element
+    //using add button in the appcomponent the chagnes in the serviceData property
+    //seems to updated in the UI because of it is an event
+    //below example replicate the scenario where data got updated aftersome time
+    //the serviceData got updated but the changes would not shown in the UI
+    //it will show only any event in the current component or changedetection method
     setTimeout(()=>{
       this.sf.jsonData.push({
-        id: 5,
-        title: 'Build with Pipe',
+        id: this.count,
+        title: 'Build with Pipe LongTime' + this.count,
         description: 'Pipe are the building blocks of Angular applications.',
         buttonText: 'See Pipe Examples'
-      })
+      });
+      //Thi will detect changes
+      //this.cdr.detectChanges();
 
-      //Althogh i am assigning it never updates the UI unless there is change in the reference
-      this.serviceData = this.sf.jsonData;
-      console.log(this.sf.jsonData)
-    },5000)
-
-    //To update the UI even in the Onpush strategy to solid response
-    //So it will replace the reference and it got caught by change detection on push
-    setTimeout(()=>{
-     this.sf.jsonData = [...this.sf.jsonData , {
-        id: 6,
-        title: 'Build with Service',
-        description: 'Service are the building blocks of Angular applications.',
-        buttonText: 'See Service Examples'
-      }]
-      //this.serviceData = this.sf.jsonData;
-      //mark for check will mark the component to be run the next change detection
-      //it just marked it won't run it imediately like detectChanges
-      //However since we put it inside the setTimeout it would run
-      //Change detection will run even if it is in onpush for event mouse,onlcick
-      //observable data bind , rxjs operator , setTimeout , setInterval etc
       this.cdr.markForCheck();
-      console.log(this.sf.jsonData)
-    },6000)
+      console.log("Service data updated",this.serviceData)
+        },20000)
+  }
+
+  ngOnInit(): void {
+    
+  }
+
+  
+
+  mannualDetect()
+  {
+    //this.serviceData = this.sf.jsonData;
+  }
+
+  public count = 5;
+
+  add(){
+
+    this.count = this.count + 1;
+
+    //Look at it over here due to the event triggered angular detect the changes 
+    //and update the UI even in the on push
+    this.sf.jsonData.push({
+      id: this.count,
+      title: 'Build with Pipe ' + this.count,
+      description: 'Pipe are the building blocks of Angular applications.',
+      buttonText: 'See Pipe Examples'
+    });
+
+    //Even in the on push if the reference got update the data got update
+    //this.serviceData = [...this.sf.jsonData]
+
+    console.log("Logging the service",this.serviceData);
+    
   }
 
   alert(event:any){
-
+    let obj = this.serviceData.findIndex((item) => item.id === event.id)
+    this.serviceData.splice(obj,1);
   }
   
 }

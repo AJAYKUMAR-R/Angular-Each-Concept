@@ -1,6 +1,3 @@
-<!-- <app-summary appTableHighlighter></app-summary> -->
-
-<h1>The notifiers From the root componet</h1>
 <div>
     <button (click)="add()">Add Data</button>
     <button (click)="mannualDetect()">Detect Data</button>
@@ -9,5 +6,4 @@
     <app-notifier [eachNotifier]="item" (notify)="alert($event)"></app-notifier>
 </ng-container>
 
-<h1>The notifiers From the app-summary Parentcomponet</h1>
-<app-summary-parent [serviceData]="serviceData"></app-summary-parent>
+
