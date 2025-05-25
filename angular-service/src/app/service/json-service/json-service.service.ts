@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,9 +29,19 @@ export class JsonServiceService {
     }
   ];
   
-  public jsonData:any[]= [];
+  public jsonData:BehaviorSubject<any> = new BehaviorSubject<any>(this.cards);
 
   constructor() { 
-    this.jsonData = [...this.cards]
   }
+
+  postData(item:any){
+    this.cards.push(item);
+    this.jsonData.next([...this.cards]);
+  }
+
+  deleteData(item:any){
+    this.cards.splice(this.cards.findIndex(obj => item.id === obj.id ) , 1);
+    this.jsonData.next([...this.cards])
+  }
+
 }
