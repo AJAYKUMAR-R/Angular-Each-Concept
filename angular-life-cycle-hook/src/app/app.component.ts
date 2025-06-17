@@ -33,12 +33,15 @@ export class AppComponent implements OnInit,OnDestroy,OnChanges{
   }
 
   Modify(){
-    let array = [this.data.map((element:any) => {
+    let array = this.data.map((element:any) => {
       return element + "_";
-    })];
+    });
 
-    this.data = [...array];
+    //This has been commented to verify the minor mutation
+    // this.data = [...array];
 
+    //modifiying the data one for minor mutation
+    this.data[0] = "Telungu"
     console.log(array);
     
   }
